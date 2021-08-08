@@ -4,7 +4,9 @@
     by removing the width and height of the object
     and keeping just the borders, you get a tringle */
 
-.triangles {
+.triangles,
+.circles,
+.simonGame {
     display: flex;
     background-color: #f1f1f1;
 }
@@ -55,10 +57,7 @@
 }
 
 /* Circles */
-.circles {
-    display: flex;
-    background-color: #f1f1f1;
-}
+
 .circle {
     background-color: red;
     width: 50px;
@@ -93,3 +92,59 @@
     height: 100px;
     border-radius: 100px;
 }
+
+.ring_3 {
+    background-color: transparent;
+    width: 225px;
+    height: 225px;
+    border-radius: 225px;
+    border-top: 100px solid green;
+    border-right: 100px solid transparent;
+    border-bottom: 100px solid blue;
+    border-left: 100px solid yellow; 
+  
+    transform: rotateZ(-45deg)
+}
+
+/* Simon Game board (touch zones) */
+.button {
+    background-color: transparent;
+    width: 225px;
+    height: 225px;
+    border-radius: 225px;
+    transform: rotateZ(-45deg)
+
+    border-top: 100px solid green;
+    border-right: 100px solid red;
+    border-bottom: 100px solid blue;
+    border-left: 100px solid yellow; 
+    position: absolute;
+    transform: rotateZ(-45deg)
+}
+
+.green {
+    border-top: 100px solid green;
+    border-right: 100px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-left: 100px solid transparent; 
+}
+.red {
+    border-top: 100px solid transparent;
+    border-right: 100px solid red;
+    border-bottom: 100px solid transparent;
+    border-left: 100px solid transparent; 
+}
+.blue {
+    border-top: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 100px solid blue;
+    border-left: 100px solid transparent; 
+}
+.yellow{
+    border-top: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-left: 100px solid yellow; 
+}
+
+
