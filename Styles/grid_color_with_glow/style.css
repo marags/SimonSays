@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    box-sizing: border-box;
+
+    background-color: #060C1F;
+    font-family: 'Almarai', sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 500px; 
+    height: 500px; 
+    box-sizing: border-box;
+    border: 1px solid black;
+    height: 100vh;
+    
+    display: flex;
+    align-items: center;
+    
+   
+}
+.gameboard {
+    box-sizing: border-box;
+    border: 1px dashed;
+
+    /* top | right | bottom | left */
+    /* margin: 10% 5% 50% 5%; */
+    width: 500px; 
+    height: 500px; 
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+   
+    position: absolute;
+}
+.box {
+    width: 225px;
+    height: 225px;
+    /* background: #fff; */
+    /* margin: 10px; */
+    font-size: 50px;
+    color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#green{background: green;}
+#red{background: red;}
+#yellow{background: yellow;}
+#blue{background: blue;}
+
+#green:hover{
+    opacity: .8;
+    /* in order: x offset, y offset, blur size, spread size, color */
+    /* box-shadow: 0px 0px 30px 10px #0ff; */
+    /* box-shadow: 0px 0px 30px 10px green; */
+    /* border-radius: 50%; */
+
+    /* We can stack multiple glow effects on an element by giving 
+    box-shadow multiple sets of values, separated by commas. 
+    The glow effects will be stacked with first on top, last on bottom. */
+    box-shadow:
+        0 0 15px 5px #fff,  /* inner white */
+        0 0 30px 25px green, /* middle green */
+        0 0 30px 15px #0ff; /* outer cyan */
+
+}
+#red:hover{
+    background: red;
+    /* box-shadow: 0px 0px 30px 10px red; */
+
+    /* border-radius: 50%; */
+    /* Now let’s play with inset glows. By adding inset to your box-shadow 
+    declaration, you can change it from an outer glow to an inner glow. 
+    Combine this with x/y offset values to create an effect where a color 
+    is glowing inward from one side. Applying this CSS: */
+    /* box-shadow: */
+        /* inset 60px 0 120px red,  left magenta */
+        /* inset -60px 0 120px #0ff; right cyan */
+
+    box-shadow:
+        0 0 15px 5px #fff,  /* inner white */
+        0 0 30px 25px red, /* middle green */
+        0 0 30px 15px #0ff; /* outer cyan */
+    opacity: .8;
+}
+#yellow:hover{
+    opacity: .8;
+    background: yellow;
+    box-shadow: 0px 0px 30px 10px yellow;
+    /* border-radius: 50%; */
+    box-shadow:
+    inset 0 0 50px #fff,      /* inner white */
+    inset 20px 0 80px yellow,   /* inner left magenta short */
+    inset -20px 0 80px #0ff,  /* inner right cyan short */
+    inset 20px 0 300px yellow,  /* inner left magenta broad */
+    inset -20px 0 300px #0ff, /* inner right cyan broad */
+    0 0 50px #fff,            /* outer white */
+    -10px 0 80px yellow,        /* outer left magenta */
+    10px 0 80px #0ff;         /* outer right cyan */
+
+    box-shadow:
+        0 0 15px 5px #fff,  /* inner white */
+        0 0 30px 25px yellow, /* middle green */
+        0 0 30px 15px #0ff; /* outer cyan */
+}
+#blue:hover{
+    background: blue;
+    box-shadow: 0px 0px 30px 10px blue;
+    box-shadow:
+    inset 0 0 50px #fff,      /* inner white */
+    inset 20px 0 80px blue,   /* inner left magenta short */
+    inset -20px 0 80px #0ff,  /* inner right cyan short */
+    inset 20px 0 300px blue,  /* inner left magenta broad */
+    inset -20px 0 300px #0ff, /* inner right cyan broad */
+    0 0 50px #fff,            /* outer white */
+    -10px 0 80px blue,        /* outer left magenta */
+    10px 0 80px #0ff;         /* outer right cyan */
+
+    box-shadow:
+        0 0 15px 5px #fff,  /* inner white */
+        0 0 30px 25px blue, /* middle green */
+        0 0 30px 15px #0ff; /* outer cyan */
+    opacity: .8;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="gameControls">
+            SIMON
+        </div>
+        <div class="simonGame">
+
+            <div  class="topLeft">
+                <div onclick="clickGreen()" class="button green">
+                    <div class="greenInner"></div>
+                </div>
+            </div>
+           
+            <div class="topRight">
+                <div onclick="clickRed()" class="button red">
+                    <div class="redInner"></div>
+                </div>
+            </div>
+    
+            <div class="bottomLeft">
+                <div onclick="clickYellow()" class="button yellow">
+                    <div class="yellowInner"></div>
+                </div>
+            </div>
+    
+            <div class="bottomRight">
+                <div onclick="clickBlue()" class="button blue">
+                    <div class="blueInner"></div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <script>
+        function clickGreen() {
+            console.log("GREEN CLICK");
+        }
+        function clickRed() {
+            console.log("RED CLICK");
+        }
+        function clickYellow() {
+            console.log("YELLOW CLICK");
+        }
+        function clickBlue() {
+            console.log("BLUE CLICK");
+        }
+
+    </script>
+</body>
+</html>
