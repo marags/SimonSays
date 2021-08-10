@@ -1,8 +1,21 @@
-document.getElementById("green").addEventListener("click", function () {console.log("Green CLick")})
+
+// Events for user clicking
+const green = document.getElementById("green").addEventListener("click", function () {getUserClicks(0)});
+const red = document.getElementById("red").addEventListener("click", function () {getUserClicks(1)});
+const yellow = document.getElementById("yellow").addEventListener("click", function () {getUserClicks(2)});
+const blue = document.getElementById("blue").addEventListener("click", function () {getUserClicks(3)});
+
 // Values represent the timing used in the setInterval setTimeout functions. The larger the number the longer
 // the delay in the sequence for each color to turn on and off thus making it easier. 
 // Standard: easy = 3000, medium = 2000, hard = 1000
-const difficulty = 2000; //1000 milliseconds = 1 seconds
+const difficulty = 1000; //1000 milliseconds = 1 seconds
+
+// colorSequenceIndex is the current size and index for colorSequence array for adding the next color in the
+// automated sequence. 
+let colorSequenceIndex = 0;
+
+// userClickCount tracks correct clicks user has entered for the current round
+let userClickCount = 0;
 
 
 // Array values (0-3) represent colors (function call for a given color block)
@@ -12,31 +25,29 @@ const difficulty = 2000; //1000 milliseconds = 1 seconds
 // 3 = blue (bottom right)
 let colorSequence = [];
 
+// random number (0-3) used to add color to the sequence
 function getRandomInt(max) {
-    console.log("getRandomInt")
     const num = Math.floor(Math.random() * max);
-    console.log('num ', num);
     colorSequence.push(num);
+    colorSequenceIndex++;
 }
 
-(function game() {
-    // This loop is generating values for the sequence for testing purposes
-    // full game will increment the colorSequence array by one for each start of the sequence
-    for(let i = 0; i < 0; i++)
-    {
-        getRandomInt(4);
-    }
-    // console.log("arr size ", colorSequence.length)
-    // console.log("array ", colorSequence);
-
-    //intervals that control the timing of the sequence execution for each color on and off
+// main function for computer 
+// 1. Generates the next color to the sequence/pattern
+// 2. Displays entire sequence/pattern on the gameboard
+// 3. Repeats steps 1-2 with current or new sequence
+function game() { 
+    // add color to the sequence/pattern
+    getRandomInt(4);
+    
     let i = 0;
     let j = 0;
+    
+    // Display sequence/pattern on gameboard
     let turnColorOn = setInterval(() => {
         console.log("setInterval ", i);
 
-        if(colorSequence.length > 0)
-        {
+        
             const color = getColor(colorSequence[i]);
             // const panel = document.getElementById(color);
             playColor(color)
@@ -53,42 +64,11 @@ function getRandomInt(max) {
                 clearInterval(turnColorOn);
             i++;
 
-        }
     }, difficulty);
     
-
-    let i = 0;
-    let j = 0;
-    if(colorSequence.length > 0)
-    {
-        let turnColorOn = setInterval(() => {
-            console.log("setInterval ", i);
-    
-            
-                const color = getColor(colorSequence[i]);
-                // const panel = document.getElementById(color);
-                playColor(color)
-    
-                let turnColorOff = setTimeout(() => {
-                    console.log("setTimeout ", j);
-                    endColor(color)
-                    // if(j == 1) 
-                    //     clearInterval(turnColorOff);
-                    // j++
-                }, difficulty - 500);
-    
-                if (i == colorSequence.length - 1)
-                    clearInterval(turnColorOn);
-                i++;
-    
-            
-        }, difficulty);
-    }
-
-    //now do timeouts waiting for users to click
-    getUserClicks();
-})()
-
+}
+// uncomment game(); to begin game in the current state (more functionality will be added to initiate game)
+// game();
 
 
 function getColor(colorIn) {
@@ -106,34 +86,47 @@ function getColor(colorIn) {
         console.log("getColor() colorIn value out of range or null--colorIn = ", colorIn);
     return color;
 }
+
+// add effect to gameboard for current color in the sequence/pattern
 function playColor(colorIn) {
     const panel = document.getElementById(colorIn);
     panel.style.boxShadow = `0 0 15px 5px #fff, 0 0 30px 25px ${colorIn}, 0 0 30px 15px #0ff`;
     
-    console.log("playColor ", panel);
+    // console.log("playColor ", panel);
 }
+// remove effect to gameboard for current color in the sequence/pattern
 function endColor(colorIn) {
     const panel = document.getElementById(colorIn);
     panel.style.boxShadow = ``;
     
-    console.log("endColor ", panel);
+    // console.log("endColor ", panel);
 }
  
-
-
-
-
-let counter = 0;
-function start(counter){
-    if(counter < colorSequence.length){
-      setTimeout(function(){
-        counter++;
-        console.log(counter);
-        start(counter);
-      }, 1000);
+// capture and track user selection for current round for the sequence/pattern
+// function will also repeat game if the pattern is matched correctly
+// or resets the game if the pattern is incorrect.
+function getUserClicks(color) {
+    console.log("Inside getUserClicks ", color);
+    
+    if(color == colorSequence[userClickCount])
+    {
+        console.log("correct")
+        userClickCount++;
+    } 
+    else 
+    {
+        console.log("wrong")
+        colorSequence = [];
+        colorSequenceIndex = 0;
+        userClickCount = 0;
+        alert("GAME OVER");
+        game();
     }
-}
-start(0);
-function getUserClicks() {
-
+    if(userClickCount == colorSequence.length)
+    {
+        //user has correctly clicked on the color sequence, continue game with next color in the pattern
+        console.log("user matched pattern")
+        userClickCount = 0;
+        game();
+    } 
 }
