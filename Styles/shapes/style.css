@@ -115,36 +115,24 @@
         border-radius: 225px;
         transform: rotateZ(-45deg)
     
-        border-top: 100px solid green;
-        border-right: 100px solid red;
-        border-bottom: 100px solid blue;
-        border-left: 100px solid yellow; 
+        border-top: 100px solid transparent;
+        border-right: 100px solid transparent;
+        border-bottom: 100px solid transparent;
+        border-left: 100px solid transparent; 
         position: absolute;
         transform: rotateZ(-45deg)
     }
     
     .green {
         border-top: 100px solid green;
-        border-right: 100px solid transparent;
-        border-bottom: 100px solid transparent;
-        border-left: 100px solid transparent; 
     }
     .red {
-        border-top: 100px solid transparent;
         border-right: 100px solid red;
-        border-bottom: 100px solid transparent;
-        border-left: 100px solid transparent; 
     }
     .blue {
-        border-top: 100px solid transparent;
-        border-right: 100px solid transparent;
         border-bottom: 100px solid blue;
-        border-left: 100px solid transparent; 
     }
     .yellow{
-        border-top: 100px solid transparent;
-        border-right: 100px solid transparent;
-        border-bottom: 100px solid transparent;
         border-left: 100px solid yellow; 
     }
     
