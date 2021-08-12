@@ -10,8 +10,8 @@ const videoDiv = document.getElementById("videoDiv");
 
 // ----- SOUNDS ----- //
 const losingSounds = ['./audio/lost/bart_laugh.mp3','./audio/lost/not_going_to_curse.mp3','./audio/lost/number_for_911.mp3','./audio/lost/save_me_superman.mp3','./audio/lost/stupider_like_a_fox.mp3','./audio/lost/tried_your_best.mp3','./audio/lost/trying_to_impress_people.mp3']
-const winningSounds = ['./audio/won/nerrrrd.mp3', './audio/won/so_long_losers.mp3'];
-const lost = ['./audio/ahh.mp3'];
+const winningSounds = ['./audio/won/nerrrrd.mp3', './audio/won/so_long_losers.mp3', './audio/won/I_Am_So_Smart.mp3'];
+const lost = ['./audio/wrong/ahh.mp3'];
 
 // ----- VARIABLES ----- //
 // colorSequence keeps track of the game sequence
@@ -419,7 +419,7 @@ function waitFor(conditionFunction)
  // GREEN
 function playGreen() {
     // console.log("GREEN clicked");
-    const sound = new Audio('./audio/doh.mp3');
+    const sound = new Audio('./audio/colored_tiles/doh.mp3');
     sound.play();
     green.style.backgroundColor = "#02d837"; 
 }
@@ -430,7 +430,7 @@ function endGreen() {
 // RED
 function playRed() {
     // console.log("Red clicked")
-    const sound = new Audio('./audio/Why_You_Little.mp3');
+    const sound = new Audio('./audio/colored_tiles/Why_You_Little.mp3');
     sound.play();
     red.style.backgroundColor = "#ff8080";
 }
@@ -441,7 +441,7 @@ function endRed() {
 // YELLOW
 function playYellow() {
     // console.log("Yellow clicked")
-    const sound = new Audio('./audio/mmmm_donut.mp3');
+    const sound = new Audio('./audio/colored_tiles/mmmm_donut.mp3');
     sound.play();
     yellow.style.backgroundColor = "yellow"; 
 }
@@ -452,7 +452,7 @@ function endYellow() {
 // BLUE
 function playBlue() {
      // console.log("Blue clicked")
-    const sound = new Audio('./audio/woohoo.mp3');
+    const sound = new Audio('./audio/colored_tiles/woohoo.mp3');
     sound.play();
     blue.style.backgroundColor = "#70D1FE";
 }
