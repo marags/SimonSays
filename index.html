@@ -10,11 +10,26 @@
     <link rel="stylesheet" href="./css/bart.css">
     <link rel="stylesheet" href="./css/homer.css">
     <link href="http://fonts.cdnfonts.com/css/homer-simpson-revised" rel="stylesheet">
+    <link rel="shortcut icon" href="#">
 
+        <script>
+            // unmuteButton.addEventListener('click', function() {
+            //     video.muted = false;
+            // });
+
+            // var promise = document.querySelector('video').play();
+
+            // if (promise !== undefined) {
+            //     promise.then(_ => {
+            //         // Autoplay started!
+            //     }).catch(error => {
+            //         // Autoplay was prevented.
+            //         // Show a "Play" button so that user can start playback.
+            //     });
+            // }
+        </script>
 </head>
 <body>
-     
-
 
     <!-- 1-player Game instructions -->
     <!-- Slide the ON/OFF switch to ON, the Game Selector switch to "2" and the Skill Level switch to "4".
@@ -32,14 +47,15 @@
         Press the LAST button, and count the number of signals as it plays back the last (longest) sequence. This is your score.
 
         To play again, repeat Steps 2 through 7. If you make it to 31 signals, Simon will salute you with six short signals. -->
-
+    
     <!-- Video Intro (fades out) -->
-    <!-- <div id="videoDiv">
-        <video id="video" width="100%" height="auto" controls>
-            <source src="./video/simpsons_intro.mov">
-        Your browser does not support the video tag.
+    <div id="videoDiv">
+        <video id="video" width="100%" height="auto" preload="auto" webkit-playsinline="true" autoplay="false" muted="muted">
+            <source src="./video/simpsons_intro2.mov">
+            Your browser does not support the video tag.
         </video> 
-    </div>  -->
+        <button id="unmuteButton">Unmute</button>
+    </div> 
     
     <div class="instructions">
     
@@ -69,10 +85,18 @@
         <div class="gameboardContainer">
 
             <div class="gameControls">
-                HOMER
-                <button id="start">Start</button>
-                <button id="reset">Reset</button>
-                <button id="lost">Sound</button> 
+                <!-- <div>round</div> -->
+                <div id="roundDisplay">0</div> 
+                
+                <div id="title">HOMER</div> 
+                
+                <div id="levelDisplay">1</div>
+
+                <div id="buttons">
+                    <button id="start">Start</button>
+                    <button id="level">Level</button>
+                    <button id="reset">Reset</button>
+                </div>
             </div>
              
             <div class="gameboard">
