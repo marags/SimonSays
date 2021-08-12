@@ -32,9 +32,10 @@ let colorSequence = [];
 let levels = [8, 14, 20, 31];
 let level = 1;
 let levelLength = levels[level - 1];
+// let levelLength = 2; // for gameWon() testing
 
-const difficulty = 1000;
-const difficultyIncrease = 200;
+// controls the sequence call delay (decreases after every 9 rounds to speed up sequence)
+let difficulty = 1000;
 
 // transitionTime controls the setTimeout delay for resetting/continued round during user turn
 const transitionTime = 1000;
@@ -136,6 +137,7 @@ levelSelected.onclick = function()
         levelDisplay.innerText = level;
         
         levelLength = levels[level - 1];
+        // levelLength = 2; // for gameWon() testing
         // roundDisplay.innerHTML
         startGame();
     }
@@ -169,6 +171,7 @@ function startGame() {
     userClickCount = 0; 
     userTurn = false;
     roundCount = 1;
+    difficulty = 1000;
     roundDisplay.innerHTML = roundCount;
 
     // if (generateRandomSequence()) 
@@ -231,10 +234,7 @@ function generateRandomSequence()
     return true;
 }
 
-function increaseDifficulty() 
-{
-    level -= 200;
-}
+
 
 // ----- COMPUTER PLAY (COLORED SEQUENCE) ----- //
 function playSequence() 
@@ -246,17 +246,10 @@ function playSequence()
     // disengage user ability to click on tiles
     userTurn = false;
 
-    // !!!!!!!!!!!!!!!!!!! need to implement increased time with round advancement !!!!!!!!!!!!!!!!!!!!!!
-    // if(roundCount % 2 == 0 && level > 200)
-    // {
-    //     // every 9 rounds the difficulty needs to be reduced (to speed up sequence display)
-    //     // increaseDifficulty();
-    //     console.log("difficulty increase level= ", level)
-    // }
-
-
-
-
+    if (roundCount % 2 == 0 && difficulty > 200)
+    {
+        difficulty -= 200;
+    }
 
     // Interval for computer play sequence (difficulty above to adjust sequence speed)
     let playRound = setInterval( () => 
@@ -315,6 +308,8 @@ function playSequence()
 // ------ USER PLAY (SEQUENCE MATCHING) ----- //
 function checkSequenceForMatch(colorIn) 
 {
+    userClickCount++;
+
     // trigger onmousedown event while checking
     setTimeout(function() {
         endGreen();
@@ -323,41 +318,54 @@ function checkSequenceForMatch(colorIn)
         endBlue();
     }, 200);
 
-    // console.log("color at userClick ",userClickCount, " ", colorSequence[userClickCount]);
-
     // if user pick is wrong, end round and start game over
-    if (colorIn != colorSequence[userClickCount])
+    if (colorIn != colorSequence[userClickCount - 1])
     {
         console.log("Wrong");
-        // reset game
+        // start a new game
+        
+        wrongPlay();
+    
+        setTimeout(function() 
+            {
+                gameOver();
+            }, 1000);
+
         setTimeout( function() 
             {
                 startGame();
-            }, 1000);
-
+            }, 5000);
     }
-
-    // increment userClick
-    userClickCount++;
-
-    // if user click equals roundCount, all picks were correct, advance to next round
-    if (userClickCount >= roundCount)
+    else 
     {
-        console.log("round correct!")
-        userTurn = false;
-        userClickCount = 0;
-        roundCount++;
-        roundDisplay.innerHTML = roundCount;
+        // user choice is correct
 
-        // console.log("play sequence called with userClick ", userClickCount, " roundCount ", roundCount)
-
-        setTimeout(function() {
-            playSequence();
-        }, transitionTime);
+        // check for if game is complete
+        if (userClickCount == roundCount && roundCount == levelLength)
+        {
+            //game won
+            console.log('game won')
+            userTurn = false;
+            gameWon();
+            //play color sequence without tile sound
+        }
+        else if (userClickCount == roundCount)
+        {
+            // round is over
+            userTurn = false;
+            userClickCount = 0;
+            roundCount++;
+            roundDisplay.innerHTML = roundCount;
+            setTimeout(function() {
+                playSequence();
+            }, transitionTime);
+        }
+        else 
+        {
+            //something is wrong
+            console.log("correct choice but logic is wrong with ending game or round");
+        }
     }
-
-    // check for game won
-
 }
 
 
@@ -411,32 +419,28 @@ function endBlue() {
 // ----- SOUND FUNCTIONS ----- //
 function gameWon() 
 {
-    console.log("Game Won!!");
+    console.log("Game Won Audio");
     const sound = new Audio(winningSounds[getRandomInt(winningSounds.length)]);
-    return sound;
-    // sound.onloadedmetadata;
-    // console.log("sound = ", sound , " duration ", sound.duration);
-    // sound.play();
-    // sound.onended = function() {
-    //     console.log("sound has ended");
-    //     return true;
-    // }
+    sound.play();
+   
+    sound.onended = function() {
+        console.log("sound has ended");
+        return true;
+    }
 }
 
 function wrongPlay() 
 {
-    console.log("Wrong Play");
+    console.log("Wrong Play Audio");
     const sound = new Audio(lost[getRandomInt(lost.length)]);
-    return sound;
-    // sound.play();
+    sound.play();
 }
 
 function gameOver() 
 {
-    console.log("Game Over");
-    const sound = new Audio(lost[losingSounds[getRandomInt(losingSounds.length)]]);
-    return sound;
-    // sound.play();
+    console.log("Game Over Audio");
+    const sound = new Audio(losingSounds[getRandomInt(losingSounds.length)]);
+    sound.play();
 }
 
 // ----- VIDEO FUNCTIONS ---- //
