@@ -7,20 +7,35 @@ const blue = document.getElementById("blue");
 
 // ----- VIDEO ELEMENT ----- //
 const videoDiv = document.getElementById("videoDiv");
+const videoTag = document.getElementById("video");
+// videoTag.onload = function() {
+//     console.log("video has started")
+// }
 
 // ----- SOUNDS ----- //
 const losingSounds = ['./audio/lost/bart_laugh.mp3','./audio/lost/not_going_to_curse.mp3','./audio/lost/number_for_911.mp3','./audio/lost/save_me_superman.mp3','./audio/lost/stupider_like_a_fox.mp3','./audio/lost/tried_your_best.mp3','./audio/lost/trying_to_impress_people.mp3']
 const winningSounds = ['./audio/won/nerrrrd.mp3', './audio/won/so_long_losers.mp3', './audio/won/I_Am_So_Smart.mp3'];
 const lost = ['./audio/wrong/ahh.mp3'];
 
+// ----- CONTROL ELEMENTS ----- /
+const gameStart = document.getElementById("start");
+const levelDisplay = document.getElementById("levelDisplay");
+const levelSelected = document.getElementById("level");
+const reset = document.getElementById("reset");
+const roundDisplay = document.getElementById("roundDisplay");
+
 // ----- VARIABLES ----- //
 // colorSequence keeps track of the game sequence
 let colorSequence = [];
 
-// difficulty sets the starting level of difficulty by controlling the delay between each color sequence
-// level begings at difficulty and decreases after 9 rounds of play
+// levels 1-4 represent the color sequence length for game
+let levels = [8, 14, 20, 31];
+let level = 1;
+let levelLength = levels[level - 1];
+
 const difficulty = 1000;
-let level = difficulty;
+const difficultyIncrease = 200;
+
 // transitionTime controls the setTimeout delay for resetting/continued round during user turn
 const transitionTime = 1000;
 
@@ -34,116 +49,10 @@ let userTurn = false;
 // current round (starts at 1 ends at 31)
 let roundCount = 0;
 
-// ----- VIDEO FUNCTIONS ---- //
-
-// Video intro controls (fade out, animation triggering and volume lowering)
-// function fadeVideo() {
-//     const videoDiv = document.getElementById("video");
-//     let videoFade = document.getElementById("video");
-//     videoFade.style.opacity = 1;
-
-
-//     console.log("videofade ", videoFade.style.opacity)
-//     let fade = setInterval(() => {
-//         if(videoFade.style.opacity <= .20) {
-//             clearInterval(fade)
-//             removeVideo(); 
-//         }
-       
-//         videoFade.style.opacity -= 0.1;
-//     }, 200);
-// }
-// setTimeout("fadeVideo()", 27000); 
-
-// function removeVideo() { 
-    
-//     console.log("removeVideo")
-//     const test = document.getElementById("videoDiv");
-//     test.classList.add("removed");
-//     test.addEventListener("transitionend", () => {
-//         console.log("transitioned");
-//         videoDiv.remove(); 
-//     })
-// }
-
-
-
-// videoDiv.oncanplay = function() {
-//     console.log("canplaythrough")
-//     setTimeout(function() {
-//         var fades = document.getElementById('video');
-//         fade(fades);
-//     }, 1000);
-// }
-
-// function fade(element) {
-//     var op = 0;
-//     var timer = setInterval(function() {
-//         if (op >= 1) clearInterval(timer);
-//         element.style.opacity = op;
-//         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-//         op += op * 0.1 || 0.1;
-//     }, 50);
-// }; 
-
-// function lowerVolume() {
-//     var vid = document.getElementById("video");
-//     vid.volume = 1; 
-
-//     let volumeOff = setInterval(() => {
-//         if(vid.volume < 0.21){
-//             clearInterval(volumeOff)
-//         }
-           
-//         vid.volume -= 0.2;
-//     }, 200);
-// }
-// setTimeout("lowerVolume()", 28500);
-
-// ----- SOUND FUNCTIONS ----- //
-function gameWon() 
-{
-    console.log("Game Won!!");
-    const sound = new Audio(winningSounds[getRandomInt(winningSounds.length)]);
-    return sound;
-    // sound.onloadedmetadata;
-    // console.log("sound = ", sound , " duration ", sound.duration);
-    // sound.play();
-    // sound.onended = function() {
-    //     console.log("sound has ended");
-    //     return true;
-    // }
-}
-
-function wrongPlay() 
-{
-    console.log("Wrong Play");
-    const sound = new Audio(lost[getRandomInt(lost.length)]);
-    return sound;
-    // sound.play();
-}
-
-function gameOver() 
-{
-    console.log("Game Over");
-    const sound = new Audio(lost[losingSounds[getRandomInt(losingSounds.length)]]);
-    return sound;
-    // sound.play();
-}
-
-
-
-// ----- CONTROLS ----- //
-const gameStart = document.getElementById("start")
-gameStart.onclick = function() 
-    {
-        setGame();
-    }
-
-
 
 
 // ----- COLORED TILE EVENTS ----- //
+
 // ----- GREEN ----- //
 green.onmousedown = function() 
     {
@@ -212,21 +121,69 @@ blue.onmouseup = function()
 
 
 
+// ----- CONTROL FUNCTIONS ----- //
+
+gameStart.onclick = function() 
+    {
+        userTurn = false;
+        startGame();
+    }
+
+// ----- LEVEL SELECT ----- /
+levelSelected.onclick = function() 
+    {
+        level = level++ % 4 + 1;
+        levelDisplay.innerText = level;
+        
+        levelLength = levels[level - 1];
+        // roundDisplay.innerHTML
+        startGame();
+    }
+
+// ----- RESET BUTTON ----- /
+reset.onclick = function() 
+    {
+        // repeat current round
+        userTurn = false;
+        userClickCount = 0;
+        
+        setTimeout (function() {
+            playSequence();
+        }, 800);
+    }
+
+
+
+
+
+
+
+
+
+
 // ----- GAME FUNCTIONS ----- //
 
-function setGame() {
+function startGame() {
     console.log("New Game");
     colorSequence = [];
     userClickCount = 0; 
     userTurn = false;
     roundCount = 1;
-    level = difficulty;
+    roundDisplay.innerHTML = roundCount;
 
-    if (generateRandomSequence()) 
-    {
-        // play round 1
+    // if (generateRandomSequence()) 
+    // {
+    //     // play round 1
+    //     playSequence();
+    // }
+
+    generateRandomSequence();
+
+    // user has 1.5 seconds after start is pressed until first color is displayed
+    setTimeout (function() {
         playSequence();
-    }
+        console.log("playSequence")
+    }, 1500);
 }
 
 
@@ -264,13 +221,13 @@ function getColor(colorIn)
 // Generates all 31 colors in the sequence to initialize the game
 function generateRandomSequence() 
 {
-    for(let i = 0; i < 31; i++)
+    for(let i = 0; i < levelLength; i++)
     {
         colorSequence.push(getColor(getRandomInt(4)));
     }
     console.log("Game Color Sequence Generated: ", colorSequence)
 
-    // when sequence is populated, tell setGame() it's clear to initiate playSequence() to start round 1
+    // when sequence is populated, tell startGame() it's clear to initiate playSequence() to start round 1
     return true;
 }
 
@@ -289,11 +246,14 @@ function playSequence()
     // disengage user ability to click on tiles
     userTurn = false;
 
-    if(roundCount % 2 == 0 && level > 200)
-    {
-        increaseDifficulty();
-        console.log("difficulty increase level= ", level)
-    }
+    // !!!!!!!!!!!!!!!!!!! need to implement increased time with round advancement !!!!!!!!!!!!!!!!!!!!!!
+    // if(roundCount % 2 == 0 && level > 200)
+    // {
+    //     // every 9 rounds the difficulty needs to be reduced (to speed up sequence display)
+    //     // increaseDifficulty();
+    //     console.log("difficulty increase level= ", level)
+    // }
+
 
 
 
@@ -346,7 +306,7 @@ function playSequence()
                 window.clearInterval(playRound);
                 userTurn = true;
             }
-        }, level);
+        }, difficulty);
 }
 
 
@@ -370,15 +330,11 @@ function checkSequenceForMatch(colorIn)
     {
         console.log("Wrong");
         // reset game
-        setTimeout(function() {
-    
-            wrongPlay(); 
-    
-        }, 2000);
-        setTimeout(function() {
-            
-            setGame();
-        }, 2000);
+        setTimeout( function() 
+            {
+                startGame();
+            }, 1000);
+
     }
 
     // increment userClick
@@ -391,32 +347,23 @@ function checkSequenceForMatch(colorIn)
         userTurn = false;
         userClickCount = 0;
         roundCount++;
+        roundDisplay.innerHTML = roundCount;
+
         // console.log("play sequence called with userClick ", userClickCount, " roundCount ", roundCount)
 
         setTimeout(function() {
             playSequence();
         }, transitionTime);
     }
+
+    // check for game won
+
 }
 
 
-function waitFor(conditionFunction) 
-{
-    console.log("conditionFunction = ", conditionFunction)
-    const poll = resolve => {
-        if (conditionFunction())
-            resolve();
-        else    
-            setTimeout(_ => poll(resolve), 4000);
-    }
-    return new Promise(poll); 
-}
- 
 
-
-
-
- // GREEN
+// ----- COLORED TILE PLAY ----- //
+// ----- GREEN ----- //
 function playGreen() {
     // console.log("GREEN clicked");
     const sound = new Audio('./audio/colored_tiles/doh.mp3');
@@ -427,7 +374,7 @@ function endGreen() {
     green.style.backgroundColor = "green";
 }
 
-// RED
+// ----- RED ----- //
 function playRed() {
     // console.log("Red clicked")
     const sound = new Audio('./audio/colored_tiles/Why_You_Little.mp3');
@@ -438,7 +385,7 @@ function endRed() {
     red.style.backgroundColor = "red";
 }
 
-// YELLOW
+// ----- YELLOW ----- //
 function playYellow() {
     // console.log("Yellow clicked")
     const sound = new Audio('./audio/colored_tiles/mmmm_donut.mp3');
@@ -449,7 +396,7 @@ function endYellow() {
     yellow.style.backgroundColor = "#FED90F"
 }
 
-// BLUE
+// ----- BLUE ----- //
 function playBlue() {
      // console.log("Blue clicked")
     const sound = new Audio('./audio/colored_tiles/woohoo.mp3');
@@ -461,4 +408,100 @@ function endBlue() {
 }
 
 
+// ----- SOUND FUNCTIONS ----- //
+function gameWon() 
+{
+    console.log("Game Won!!");
+    const sound = new Audio(winningSounds[getRandomInt(winningSounds.length)]);
+    return sound;
+    // sound.onloadedmetadata;
+    // console.log("sound = ", sound , " duration ", sound.duration);
+    // sound.play();
+    // sound.onended = function() {
+    //     console.log("sound has ended");
+    //     return true;
+    // }
+}
+
+function wrongPlay() 
+{
+    console.log("Wrong Play");
+    const sound = new Audio(lost[getRandomInt(lost.length)]);
+    return sound;
+    // sound.play();
+}
+
+function gameOver() 
+{
+    console.log("Game Over");
+    const sound = new Audio(lost[losingSounds[getRandomInt(losingSounds.length)]]);
+    return sound;
+    // sound.play();
+}
+
+// ----- VIDEO FUNCTIONS ---- //
+
+// Video intro controls (fade out, animation triggering and volume lowering)
+function fadeVideo() {
+    const videoDiv = document.getElementById("video");
+    let videoFade = document.getElementById("video");
+    videoFade.style.opacity = 1;
+
+
+    console.log("videofade ", videoFade.style.opacity)
+    let fade = setInterval(() => {
+        if(videoFade.style.opacity <= .20) {
+            clearInterval(fade)
+            removeVideo(); 
+        }
+       
+        videoFade.style.opacity -= 0.1;
+    }, 200);
+}
+setTimeout("fadeVideo()", 27000); 
+
+function removeVideo() { 
+    
+    console.log("removeVideo")
+    const test = document.getElementById("videoDiv");
+    test.classList.add("removed");
+    test.addEventListener("transitionend", () => {
+        console.log("transitioned");
+        videoDiv.remove(); 
+    })
+}
+
+
+
+videoDiv.oncanplay = function() {
+    console.log("canplaythrough")
+    setTimeout(function() {
+        var fades = document.getElementById('video');
+        fade(fades);
+    }, 1000);
+}
+
+function fade(element) {
+    var op = 0;
+    var timer = setInterval(function() {
+        if (op >= 1) clearInterval(timer);
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1 || 0.1;
+    }, 50);
+}; 
+
+function lowerVolume() {
+    var vid = document.getElementById("video");
+    vid.volume = 1; 
+
+    let volumeOff = setInterval(() => {
+        if(vid.volume < 0.21){
+            clearInterval(volumeOff)
+        }
+           
+        vid.volume -= 0.2;
+    }, 200);
+}
+setTimeout("lowerVolume()", 28500);
 
