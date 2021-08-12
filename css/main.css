@@ -6,6 +6,7 @@
     --tileWidth: 325px;
     --tileHeight: 325px;
 
+    /* The Simpson's colors */
     --metallic_yellow: #FED90F;
     --light_french_beige: #D1B271;
     --white: #FFFFFF;
@@ -31,8 +32,7 @@ body {
 
 
 
-
-
+/***** Rules (text) *****/
 .instructions {
   font-size: 3em;
   color: var(--Outer_Space);
@@ -48,19 +48,15 @@ body {
   width: 75%;
 }
 
- .container {
+/***** contains Homer, Bart and the gameboard *****/
+.container {
     position: relative;
     display: flex;
-
-     /* background-image: url('./images/mmm_donuts_background.png'); */
-     /* background-image: url('./images/Homer_Bart_Donut_background.png'); */
-    
-     height: 100vh;
- }
+    height: 100vh;
+}
 
 
-
-
+/***** contains gameControls and gameboard *****/
 .gameboardContainer {
     position: relative;
 
@@ -78,13 +74,50 @@ body {
     z-index: 2;
 }
 
+/***** Game Controls *****/ 
+.gameControls {
+    width: var(--tileWidth);
+    height: var(--tileHeight);
+    background: var(--metallic_yellow);
+   
+    font-size: 50px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
+    border: 5px solid;
 
+    z-index: 1;
+     
+    /* Shapes gameboard into a circle */
+    border-radius: 100%;
+}
 
+#title {
+    color: var(--Flame);
+    font-size: 1.2em;
+}
 
+#buttons {
+   margin: 0 auto;
+   padding-top: 0;
+}
+#start, #level, #reset {
+    padding: .35em;
+    border-radius:2em;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    font-size: .5em;
+    background-color:var(--Outer_Space);
+    text-align:center;
+}
+#start:hover, #level:hover, #reset:hover {
+    background-color:#4095c6;
+}
 
-
-
+/***** Homer (Simon) game *****/
 .gameboard {
     width: var(--width); 
     height: var(--height);
@@ -107,9 +140,7 @@ body {
 }
 
 
-
-
-
+/***** colored game tiles *****/
 .tile {
     width: var(--tileWidth);
     height: var(--tileHeight);
@@ -148,32 +179,7 @@ body {
 
 
 
-
-.gameControls {
-    width: var(--tileWidth);
-    height: var(--tileHeight);
-    background: var(--metallic_yellow);
-   
-    font-size: 50px;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border: 5px solid;
-
-    z-index: 1;
-     
-    /* Shapes gameboard into a circle */
-    border-radius: 100%;
-}
-
-
-
-
-
-
-
+/****** Video Animations ******/
 
 /* Simpsons Video Fade out */
 
