@@ -4,46 +4,218 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simon Says</title>
-    <link id="linkSheet" rel="stylesheet" href="style_grid.css">
-    <script>
-        const linkSheet = document.getElementById("linkSheet")
-        // grid() = style_grid.css
-        function grid() {
-            linkSheet.href = "style_grid.css";
-        }
-        // grid_dark() = style_grid_dark.css
-        function grid_dark() {
-            linkSheet.href = "style_grid_dark.css";
-        }
-        // circle() = style_circle.css
-        function circle() {
-            linkSheet.href = "style_circle.css";
-        }
+    <title>Grid</title>
 
-    </script>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/bart.css">
+    <link rel="stylesheet" href="./css/homer.css">
+    <link href="http://fonts.cdnfonts.com/css/homer-simpson-revised" rel="stylesheet">
+
 </head>
 <body>
-    <header>
-        <button onclick="grid()">Grid</button>
-        <button onclick="grid_dark()">Grid (Dark Mode)</button>
-        <button onclick="circle()">Circle</button>
-    </header>
-    
-    <div class="container">
+     
 
-        <div class="gameboard">
-            
-            <div id="green" class="box topLeft" >Green</div>
-            <div id="red" class="box topRight" >Red</div>
-            <div id="yellow" class="box bottomLeft" >Yellow</div>
-            <div id="blue" class="box bottomRight" >Blue</div>
+
+    <!-- 1-player Game instructions -->
+    <!-- Slide the ON/OFF switch to ON, the Game Selector switch to "2" and the Skill Level switch to "4".
+
+        Press the START button. Simon will give only the first signal.
+
+        Repeat Simon's signal, and imme- diately add one. In this game, don't wait for Simon to repeat signals!
+
+        Repeat the first two signals and add one more.
+
+        Continue repeating the signals of the previous sequence and increas- ing that sequence by one. Try to reach the longest sequence of 31!
+
+        If you make an error or take more than 5 seconds to play any signal, you'll hear the "RAZZ" sound. This means the game is over.
+
+        Press the LAST button, and count the number of signals as it plays back the last (longest) sequence. This is your score.
+
+        To play again, repeat Steps 2 through 7. If you make it to 31 signals, Simon will salute you with six short signals. -->
+
+    <!-- Video Intro (fades out) -->
+    <!-- <div id="videoDiv">
+        <video id="video" width="100%" height="auto" controls>
+            <source src="./video/simpsons_intro2.mov">
+        Your browser does not support the video tag.
+        </video> 
+    </div>  -->
     
+    <div class="instructions">
+    
+        <div>
+            
+            <p>
+                Slide the ON/OFF switch to ON, the Game Selector switch to "1" and the Skill Level switch to 1,2, 3 or 4.
+
+                Press the START button. Homer will give the first signal. Repeat the signal by pressing the same color lens.
+            
+                Homer will duplicate the first signal and add one. Repeat these two signals by pressing the same color lenses, in order.
+            
+                Homer will duplicate these first two signals and add one.
+            
+                Continue playing as long as you can repeat each sequence of signals correctly. After the 5th, 9th and 13th signals in a sequence, Homer automatically speeds up.
+            
+                If you fail to repeat a sequence exactly, or if you take more than 5 seconds to repeat a signal, Homer responds with a "RAZZ" sound. This means you've lost, and the sequence of signals ends.
+            </p>
+
         </div>
         
     </div>
 
-    <script src="index.js"></script>
+
+    <div class="container gameArea">
+        
+        <div class="gameboardContainer">
+
+            <div class="gameControls">
+                HOMER
+                <button id="start">Start</button>
+                <button id="reset">Reset</button>
+                <button id="lost">Sound</button> 
+            </div>
+             
+            <div class="gameboard">
+                <!-- <div> -->
+                    <div class="topLeft tile" id="green"></div>
+                    <div class="topRight tile" id="red"></div>
+                <!-- </div> -->
+                <!-- <div> -->
+                    <div class="bottomLeft tile" id="yellow"></div>
+                    <div class="bottomRight tile" id="blue"></div>  
+                <!-- </div> -->
+        
+            </div>
+            
+        </div> 
+
+
+        <!-- HOMER  -->
+
+        <div id="homer">
+            <div id="homer-head" >
+            <div id="homer-shadow"></div>
+            <div id="homer-neck"></div>
+            <div class="homer-cheek"></div>
+            <div id="homer-forehead"></div>
+            <div class="homer-ear homer-left"></div>
+            <div id="homer-eyebrow"></div>
+            <div class="homer-eye homer-left"></div>
+            <div id="homer-beard"></div>
+            <div id="homer-smile"></div>
+            <div id="homer-upper-lip"></div>
+            <div id="homer-nose"></div>
+            <div class="homer-eye"></div>
+            <div class="homer-hair-top"></div>
+            <div class="homer-hair-top homer-left"></div>
+            <div id="homer-hair"></div>
+            <div class="homer-ear"></div>
+            <div id="homer-v-neck"></div>
+            <div class="homer-shirt-neck"></div>
+            </div>
+            <div id="homer-legs">
+            <div class="homer-shoe"></div>
+            <div class="homer-shoe homer-right"></div>
+            <div class="homer-tacon"></div>
+            <div class="homer-opening homer-left"></div>
+            <div class="homer-leg homer-left"></div>
+            <div id="homer-waist"></div>
+            <div class="homer-leg homer-right"></div>
+            <div class="homer-opening"></div>
+            </div>
+            <div id="homer-body">
+            <div class="homer-shirt-arm homer-left"><div></div></div>
+            <div id="homer-shirt"><div></div></div>
+            <div id="homer-shirt-bg"></div>
+            <div id="homer-shirt-line-2"></div>
+            <div id="homer-arm"></div>
+            <div id="homer-finger-1" class="homer-finger"></div>
+            <div id="homer-finger-2" class="homer-finger"></div>
+            <div id="homer-finger-3" class="homer-finger"></div>
+            <div class="homer-shirt-arm"><div></div></div>
+            <div class="homer-line-pants"></div>
+            </div>
+        </div>
+      
+
+
+        <!-- BART -->
+        <div id="bart">
+            <div id="shadow"></div>
+            <div id="legs">
+            <div class="sock"></div>
+            <div class="sock left"></div>
+            <div class="leg left"></div>
+            <div class="leg right"></div>
+            <div class="shorts-leg right"></div>
+            <div id="shorts"></div>
+            <div class="shorts-leg left"></div>
+            <div class="shoe left">
+                <div class="filling"></div>
+                <div class="shoe-line-2"></div>
+                <div class="shoe-line-1"></div>
+                <div class="logo"></div>
+            </div>
+            <div class="shoe">
+                <div class="filling"></div>
+                <div class="shoe-line-2"></div>
+                <div class="shoe-line-3"></div>
+                <div class="shoe-line-1"></div>
+                
+            </div>
+            
+            </div>
+            <div id="body">
+            <div class="arm left"></div>
+            <div class="shirt-manga left"><div></div></div>
+            <div id="shirt"><div></div></div>
+            <div class="shirt-back"></div>
+            <div class="shirt-neck"></div>
+            <div class="shirt-body"></div>
+            <div class="shirt-manga"><div></div></div>
+            <div class="arm right"></div>
+            <div class="shirt-open"></div>
+            <div class="pants-pocket"></div>
+            </div>
+            <div id="head">
+            <div id="hair">
+                <div class="hair" id="hair-1"></div>
+                <div class="hair" id="hair-2"></div>
+                <div class="hair" id="hair-3"></div>
+                <div class="hair" id="hair-4"></div>
+                <div class="hair" id="hair-5"></div>
+                <div class="hair" id="hair-6"></div>
+                <div class="hair" id="hair-7"></div>
+                <div class="hair" id="hair-8"></div>
+                <div class="hair" id="hair-9"></div>
+            </div>
+            <div id="mouth"></div>
+            <div id="neck"></div>
+            <div id="forehead"></div>
+            <div class="eyelash"></div>
+            <div class="lip"></div>
+            <div class="eye left"></div>
+            <div class="cheecks"></div>
+            <div id="nose"></div>
+            <div class="eye right"></div>
+            <div class="back"></div>
+            <div id="ear"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+   
+    <!-- video control scripts -->
+    
+    <script src="./JS/main.js"></script>
 
 </body>
 </html>
+
+<!-- Credits for Bart and Homer -->
+<!-- <div id="links">
+    <a target="_blank" href="https://github.com/alvaromontoro/CSS-Simpsons">More on GitHub</a>
+    <a target="_blank" href="https://codepen.io/collection/DrwLdN/">More on CodePen</a>
+</div> -->
